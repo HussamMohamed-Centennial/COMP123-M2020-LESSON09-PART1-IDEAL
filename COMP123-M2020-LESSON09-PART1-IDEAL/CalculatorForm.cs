@@ -18,7 +18,11 @@ namespace COMP123_M2020_LESSON09_PART1_IDEAL
         {
             InitializeComponent();
         }
-
+        /// <summary>
+        /// This is a shared events handler for all button on the calculator
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CalculatorButton_Click(object sender, EventArgs e)
         {
             Button calculatorButton = sender as Button;
@@ -36,12 +40,32 @@ namespace COMP123_M2020_LESSON09_PART1_IDEAL
 
                 if (resultLabel.Text == "0") 
                 {
-                    resultLabel.Text = calculatorButton.Text;
+                    if (calculatorButton.Text == ".")
+                    {
+                        resultLabel.Text += calculatorButton.Text;
+                    }
+                    else
+                    {
+                        resultLabel.Text = calculatorButton.Text;
+                    }
+                    
                 }
                 else
                 {
-                    resultLabel.Text += calculatorButton.Text;
+                    if (calculatorButton.Text == ".")
+                    {
+                        if (!resultLabel.Text.Contains("."))
+                        {
+                            resultLabel.Text += calculatorButton.Text;
+                        }
+                    }
+                    else
+                    {
+                        resultLabel.Text += calculatorButton.Text;
+                    }
                 }
+
+                
                 
             }
             else if (calculatorButton.Tag.ToString() == "Operator")
@@ -50,6 +74,7 @@ namespace COMP123_M2020_LESSON09_PART1_IDEAL
                 {
                     case "clearButton":
                         resultLabel.Text = "0";
+                        resultLabel.Font = new Font("Microsoft Sans Serif", 40.0f);
                         break;
                     case "backspaceButton":
                         if (resultLabel.Text != "0")
